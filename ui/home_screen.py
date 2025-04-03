@@ -4,6 +4,7 @@ import tkinter as tk
 from ui.add_client import AddClientWindow
 from ui.add_session import AddSessionWindow
 from ui.view_clients import ViewClientsWindow
+from ui.unpaid_clients import UnpaidClientsWindow
 
 
 class HomeScreen(tk.Frame):
@@ -19,6 +20,8 @@ class HomeScreen(tk.Frame):
         tk.Button(self, text="Add New Client", width=25, command=self.open_add_client).pack(pady=5)
         tk.Button(self, text="Export to Excel (Coming Soon)", state='disabled', width=25).pack(pady=5)
         tk.Button(self, text="View Clients & Sessions", width=25, command=self.open_view_clients).pack(pady=5)
+        tk.Button(self, text="Unpaid Balances", width=25, command=self.open_unpaid_clients).pack(pady=5)
+
 
 
     def open_add_client(self):
@@ -28,3 +31,6 @@ class HomeScreen(tk.Frame):
         AddSessionWindow(self.master, client_name="John Doe")
     def open_view_clients(self):
         ViewClientsWindow(self.master)
+    def open_unpaid_clients(self):
+        UnpaidClientsWindow(self.master)
+
