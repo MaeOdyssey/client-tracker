@@ -1,7 +1,15 @@
 [
     {
         "name": "John Doe",
-        "sessions": []
+        "sessions": [
+            {
+                "date": "2025-04-03",
+                "time": "1:30pm",
+                "fee": 500.0,
+                "client_paid": 200.0,
+                "insurance_paid": 300.0
+            }
+        ]
     },
     {
         "name": "John Doe",
