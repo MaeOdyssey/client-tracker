@@ -1,4 +1,3 @@
-# therapist_tracker/utils/export_to_excel.py
 
 import json
 import os
