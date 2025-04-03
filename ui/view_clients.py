@@ -92,6 +92,8 @@ class ViewClientsWindow(tk.Toplevel):
 
         self.session_detail_frame = tk.Frame(self.session_frame)
         self.session_detail_frame.pack(fill="x", pady=10)
+        self.update_idletasks()
+        self.geometry("")
 
     def display_session_details(self, event):
         for widget in self.session_detail_frame.winfo_children():
@@ -123,6 +125,8 @@ class ViewClientsWindow(tk.Toplevel):
 
         tk.Button(button_frame, text="Edit Session", width=15, command=lambda: self.edit_session(index)).pack(side="left", padx=5)
         tk.Button(button_frame, text="Delete Session", width=15, command=lambda: self.delete_session(index)).pack(side="left", padx=5)
+        self.update_idletasks()
+        self.geometry("")
 
     def edit_session(self, session_index):
         EditSessionWindow(self, client_id=self.selected_client_id, session_index=session_index)
@@ -162,10 +166,24 @@ class ViewClientsWindow(tk.Toplevel):
         with open(DATA_FILE, "r") as f:
             data = json.load(f)
 
-        data = [client for client in data if client["client_id"] != self.selected_client_id]
+        # Remove client by ID
+        data = [client for client in data if client.get("client_id") != self.selected_client_id]
 
         with open(DATA_FILE, "w") as f:
             json.dump(data, f, indent=4)
 
         messagebox.showinfo("Deleted", "Client deleted successfully.")
-        self.destroy()
+
+        # Refresh client list
+        self.clients = data
+        self.selected_client = None
+        self.selected_client_id = None
+
+        # Clear listbox & repopulate
+        self.client_listbox.delete(0, tk.END)
+        for client in self.clients:
+            self.client_listbox.insert(tk.END, client["name"])
+
+        # Clear session frame
+        for widget in self.session_frame.winfo_children():
+            widget.destroy()

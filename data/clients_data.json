@@ -31,5 +31,23 @@
                 "insurance_paid": 1000.0
             }
         ]
+    },
+    {
+        "client_id": "76f65f94-bfcf-4fb6-a69f-d92417694d3c",
+        "name": "Brini",
+        "sessions": [
+            {
+                "date": "1991-12-30",
+                "time": "10:40",
+                "fee": 4000.0,
+                "client_paid": 1000.0,
+                "insurance_paid": 1000.0
+            }
+        ]
+    },
+    {
+        "client_id": "400f3cd9-244e-4848-9293-12e920769fd2",
+        "name": "Shron",
+        "sessions": []
     }
 ]

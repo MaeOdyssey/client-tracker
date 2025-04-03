@@ -5,6 +5,8 @@ import json
 import os
 from tkinter import messagebox
 import uuid
+from ui.add_session import AddSessionWindow
+
 
 
 DATA_FILE = "data/clients_data.json"
@@ -44,5 +46,10 @@ class AddClientWindow(tk.Toplevel):
         with open(DATA_FILE, "w") as f:
             json.dump(data, f, indent=4)
 
-        tk.messagebox.showinfo("Saved", f"Client '{name}' added.")
-        self.destroy()
+        response = messagebox.askyesno("Client Added", f"Client '{name}' added successfully.\n\nWould you like to add a session now?")
+        if response:
+            self.destroy()  # Close this window first
+            AddSessionWindow(self.master, client_id=new_client["client_id"])
+        else:
+            messagebox.showinfo("Done", "Client saved.")
+            self.destroy()
