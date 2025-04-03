@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import json
 import os
-
+from ui.edit_session import EditSessionWindow
 DATA_FILE = "data/clients_data.json"
 
 class ViewClientsWindow(tk.Toplevel):
@@ -55,9 +55,50 @@ class ViewClientsWindow(tk.Toplevel):
             tk.Label(self.session_frame, text="No sessions recorded.").pack()
             return
 
-        for idx, session in enumerate(self.selected_client["sessions"], start=1):
+        for idx, session in enumerate(self.selected_client["sessions"]):
+            frame = tk.Frame(self.session_frame)
+            frame.pack(fill="x", padx=10, pady=2)
+
             text = (
-                f"{idx}. Date: {session['date']} | Time: {session['time']}\n"
+                f"{idx + 1}. Date: {session['date']} | Time: {session['time']}\n"
                 f"   Fee: ${session['fee']} | Client Paid: ${session['client_paid']} | Insurance Paid: ${session['insurance_paid']}"
             )
-            tk.Label(self.session_frame, text=text, justify="left", anchor="w").pack(fill="x", padx=10, pady=2)
+
+            tk.Label(frame, text=text, justify="left", anchor="w").pack(side="left", expand=True, fill="x")
+
+            # ✏️ Edit Button
+            tk.Button(frame, text="Edit", command=lambda i=idx: self.edit_session(i)).pack(side="right", padx=2)
+
+            # 🗑️ Delete Button
+            tk.Button(frame, text="Delete", command=lambda i=idx: self.delete_session(i)).pack(side="right", padx=2)
+
+    
+    def edit_session(self, session_index):
+        EditSessionWindow(self, self.selected_client["name"], session_index)
+    def delete_session(self, session_index):
+        confirm = messagebox.askyesno("Confirm Delete", "Are you sure you want to delete this session?")
+        if not confirm:
+            return
+
+        if os.path.exists(DATA_FILE):
+            with open(DATA_FILE, "r") as f:
+                data = json.load(f)
+        else:
+            messagebox.showerror("Error", "Client data file not found.")
+            return
+
+        for client in data:
+            if client["name"] == self.selected_client["name"]:
+                try:
+                    del client["sessions"][session_index]
+                except IndexError:
+                    messagebox.showerror("Error", "Session not found.")
+                    return
+                break
+
+        with open(DATA_FILE, "w") as f:
+            json.dump(data, f, indent=4)
+
+        messagebox.showinfo("Deleted", "Session removed.")
+        self.selected_client["sessions"].pop(session_index)
+        self.show_sessions()
