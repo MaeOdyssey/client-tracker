@@ -6,20 +6,20 @@ import os
 DATA_FILE = "data/clients_data.json"
 
 class EditSessionWindow(tk.Toplevel):
-    def __init__(self, parent, client_name, session_index):
+    def __init__(self, parent, client_id, session_index):
         super().__init__(parent)
-        self.title(f"Edit Session {session_index + 1}")
-        self.geometry("350x300")
-        self.client_name = client_name
+        self.client_id = client_id
         self.session_index = session_index
         self.session_data = self.load_session()
+        self.geometry("350x300")
+        self.title("Edit Session")
         self.create_widgets()
 
     def load_session(self):
         with open(DATA_FILE, "r") as f:
             data = json.load(f)
         for client in data:
-            if client["name"] == self.client_name:
+            if client.get("client_id") == self.client_id:
                 return client["sessions"][self.session_index]
         return {}
 
@@ -56,7 +56,7 @@ class EditSessionWindow(tk.Toplevel):
             data = json.load(f)
 
         for client in data:
-            if client["name"] == self.client_name:
+            if client.get("client_id") == self.client_id:
                 client["sessions"][self.session_index] = updated_session
                 break
 

@@ -1,6 +1,6 @@
 [
     {
-        "name": "John Doe",
+        "name": "Kimba",
         "sessions": [
             {
                 "date": "2025-04-03",
@@ -16,10 +16,20 @@
                 "client_paid": 3000.0,
                 "insurance_paid": 1000.0
             }
-        ]
+        ],
+        "client_id": "e82ce451-cd1a-48b4-a6a8-d7c14f3508bc"
     },
     {
+        "client_id": "b5e88416-5177-4525-9359-2755f1ac90d0",
         "name": "John Doe",
-        "sessions": []
+        "sessions": [
+            {
+                "date": "2025/04/03",
+                "time": "12",
+                "fee": 4000.0,
+                "client_paid": 2000.0,
+                "insurance_paid": 1000.0
+            }
+        ]
     }
 ]

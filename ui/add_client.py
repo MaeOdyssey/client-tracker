@@ -4,6 +4,7 @@ import tkinter as tk
 import json
 import os
 from tkinter import messagebox
+import uuid
 
 
 DATA_FILE = "data/clients_data.json"
@@ -28,7 +29,7 @@ class AddClientWindow(tk.Toplevel):
             tk.messagebox.showwarning("Missing Info", "Client name cannot be empty.")
             return
 
-        new_client = {"name": name, "sessions": []}
+        new_client = {"client_id": str(uuid.uuid4()),"name": name, "sessions": []}
 
         # Load existing data
         if os.path.exists(DATA_FILE):
