@@ -6,8 +6,10 @@ import uuid
 
 from ui.edit_session import EditSessionWindow
 from ui.add_session import AddSessionWindow
+from utils.path_helper import get_resource_path
 
-DATA_FILE = "data/clients_data.json"
+
+DATA_FILE = get_resource_path( "data/clients_data.json")
 
 class ViewClientsWindow(tk.Toplevel):
     def __init__(self, master):

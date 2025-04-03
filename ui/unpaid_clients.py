@@ -1,9 +1,11 @@
 import tkinter as tk
 from tkinter import messagebox
+from ui.edit_session import EditSessionWindow
 import json
 import os
+from utils.path_helper import get_resource_path
 
-DATA_FILE = "data/clients_data.json"
+DATA_FILE = get_resource_path("data/clients_data.json")
 
 class UnpaidClientsWindow(tk.Toplevel):
     def __init__(self, master):
@@ -67,15 +69,26 @@ class UnpaidClientsWindow(tk.Toplevel):
         selected = self.unpaid_clients[index[0]]
         self.selected_client = selected
 
-        tk.Label(self.session_frame, text=f"Unpaid Sessions for {selected['name']}:", font=("Helvetica", 11)).pack()
+        tk.Label(self.session_frame, text=f"Unpaid Sessions for {selected['name']}:", font=("Helvetica", 11)).pack(pady=(5, 10))
 
-        for session in selected.get("sessions", []):
+        for i, session in enumerate(selected.get("sessions", [])):
             total_paid = session["client_paid"] + session["insurance_paid"]
             if total_paid < session["fee"]:
                 remaining = session["fee"] - total_paid
                 text = (
-                    f"- {session['date']} @ {session['time']} | "
+                    f"{session['date']} @ {session['time']} | "
                     f"Fee: ${session['fee']} | Paid: ${total_paid:.2f} | "
                     f"Remaining: ${remaining:.2f}"
                 )
-                tk.Label(self.session_frame, text=text, anchor="w", justify="left").pack(fill="x", padx=10, pady=2)
+
+                frame = tk.Frame(self.session_frame)
+                frame.pack(fill="x", padx=10, pady=4)
+
+                tk.Label(frame, text=text, anchor="w", justify="left").pack(side="left", fill="x", expand=True)
+
+                tk.Button(frame, text="Edit", command=lambda idx=i: self.edit_session(idx)).pack(side="right", padx=5)
+    def edit_session(self, session_index):
+        client_id = self.selected_client.get("client_id")
+        if client_id is not None:
+            EditSessionWindow(self, client_id, session_index)
+            #self.destroy()   Close the unpaid window after launching editor

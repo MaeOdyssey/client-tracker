@@ -4,8 +4,9 @@ from tkinter import messagebox
 from tkinter import ttk
 import json
 import os
+from utils.path_helper import get_resource_path
 
-DATA_FILE = "data/clients_data.json"
+DATA_FILE = get_resource_path( "data/clients_data.json")
 
 class AddSessionWindow(tk.Toplevel):
     def __init__(self, master, client_id):

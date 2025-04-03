@@ -1,6 +1,7 @@
 [
     {
         "name": "Kimba",
+        "client_id": "restored-0",
         "sessions": [
             {
                 "date": "2025-04-03",
@@ -16,12 +17,11 @@
                 "client_paid": 3000.0,
                 "insurance_paid": 1000.0
             }
-        ],
-        "client_id": "e82ce451-cd1a-48b4-a6a8-d7c14f3508bc"
+        ]
     },
     {
-        "client_id": "b5e88416-5177-4525-9359-2755f1ac90d0",
         "name": "John Doe",
+        "client_id": "restored-1",
         "sessions": [
             {
                 "date": "2025/04/03",
@@ -33,21 +33,16 @@
         ]
     },
     {
-        "client_id": "76f65f94-bfcf-4fb6-a69f-d92417694d3c",
         "name": "Brini",
+        "client_id": "restored-2",
         "sessions": [
             {
                 "date": "1991-12-30",
                 "time": "10:40",
                 "fee": 4000.0,
-                "client_paid": 1000.0,
+                "client_paid": 2000.0,
                 "insurance_paid": 1000.0
             }
         ]
-    },
-    {
-        "client_id": "400f3cd9-244e-4848-9293-12e920769fd2",
-        "name": "Shron",
-        "sessions": []
     }
 ]

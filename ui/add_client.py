@@ -6,10 +6,10 @@ import os
 from tkinter import messagebox
 import uuid
 from ui.add_session import AddSessionWindow
+from main import get_resource_path
 
 
-
-DATA_FILE = "data/clients_data.json"
+DATA_FILE = get_resource_path("data/clients_data.json")
 
 class AddClientWindow(tk.Toplevel):
     def __init__(self, master):

@@ -3,8 +3,10 @@ from tkinter import messagebox
 import json
 import os
 from ui.add_session import AddSessionWindow
+from utils.path_helper import get_resource_path
 
-DATA_FILE = "data/clients_data.json"
+
+DATA_FILE = get_resource_path("data/clients_data.json")
 
 class AddSessionClientPicker(tk.Toplevel):
     def __init__(self, master):
