@@ -2,7 +2,12 @@ import tkinter as tk
 from tkinter import messagebox, ttk
 from tkcalendar import DateEntry
 import json
+import uuid
 from utils.path_helper import get_resource_path
+from utils.payments_helper import (
+    get_payment_by_session_id,
+    update_payment
+)
 
 DATA_FILE = get_resource_path("data/clients_data.json")
 
@@ -12,7 +17,10 @@ class EditSessionWindow(tk.Toplevel):
         self.client_id = client_id
         self.session_index = session_index
         self.session_data = self.load_session()
-        self.geometry("350x350")
+        self.session_id = self.session_data.get("session_id")
+        self.payment_data = get_payment_by_session_id(self.session_id)
+
+        self.geometry("350x400")
         self.title("Edit Session")
         self.create_widgets()
 
@@ -39,15 +47,17 @@ class EditSessionWindow(tk.Toplevel):
                 suffix = "AM" if hour < 12 else "PM"
                 display_hour = hour if hour <= 12 else hour - 12
                 time_options.append(f"{display_hour}:{minute:02d} {suffix}")
-
         self.time_entry = ttk.Combobox(self, values=time_options, width=20)
         self.time_entry.set(self.session_data.get("time", "2:00 PM"))
         self.time_entry.pack(pady=5)
 
         # 💰 Financial fields
         self.fee_entry = self.make_labeled_entry("Fee Charged ($):", self.session_data.get("fee", ""))
-        self.client_paid_entry = self.make_labeled_entry("Paid by Client ($):", self.session_data.get("client_paid", ""))
-        self.insurance_paid_entry = self.make_labeled_entry("Paid by Insurance ($):", self.session_data.get("insurance_paid", ""))
+
+        paid_by_client = self.payment_data.get("client_paid", "") if self.payment_data else ""
+        paid_by_insurance = self.payment_data.get("insurance_paid", "") if self.payment_data else ""
+        self.client_paid_entry = self.make_labeled_entry("Paid by Client ($):", paid_by_client)
+        self.insurance_paid_entry = self.make_labeled_entry("Paid by Insurance ($):", paid_by_insurance)
 
         tk.Button(self, text="Save Changes", command=self.save_session).pack(pady=10)
 
@@ -67,13 +77,19 @@ class EditSessionWindow(tk.Toplevel):
                 "date": self.date_entry.get().strip(),
                 "time": self.time_entry.get().strip(),
                 "fee": float(self.fee_entry.get().strip()),
+                "session_id": self.session_id  # Keep session ID
+            }
+
+            updated_payment_data = {
                 "client_paid": float(self.client_paid_entry.get().strip()),
                 "insurance_paid": float(self.insurance_paid_entry.get().strip())
             }
+
         except ValueError:
             messagebox.showerror("Invalid Input", "Please make sure all amounts are numbers.")
             return
 
+        # Update session in JSON
         with open(DATA_FILE, "r") as f:
             data = json.load(f)
 
@@ -85,5 +101,8 @@ class EditSessionWindow(tk.Toplevel):
         with open(DATA_FILE, "w") as f:
             json.dump(data, f, indent=4)
 
-        messagebox.showinfo("Updated", "Session updated successfully.")
+        # Update corresponding payment
+        update_payment(self.session_id, updated_payment_data)
+
+        messagebox.showinfo("Updated", "Session and payment updated successfully.")
         self.destroy()

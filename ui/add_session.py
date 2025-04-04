@@ -1,12 +1,14 @@
 import tkinter as tk
 from tkcalendar import DateEntry
-from tkinter import messagebox
-from tkinter import ttk
+from tkinter import messagebox, ttk
 import json
 import os
-from utils.path_helper import get_resource_path
+import uuid
 
-DATA_FILE = get_resource_path( "data/clients_data.json")
+from utils.path_helper import get_resource_path
+from utils.payments_helper import create_payment
+
+DATA_FILE = get_resource_path("data/clients_data.json")
 
 class AddSessionWindow(tk.Toplevel):
     def __init__(self, master, client_id):
@@ -16,12 +18,10 @@ class AddSessionWindow(tk.Toplevel):
         self.create_widgets()
 
     def create_widgets(self):
-        # 🗓️ Date picker
         tk.Label(self, text="Select Date:").pack(pady=5)
         self.date_entry = DateEntry(self, date_pattern='yyyy-mm-dd', width=18)
         self.date_entry.pack(pady=5)
 
-        # 🕒 Time picker (15-minute intervals from 8:00 AM to 8:00 PM)
         tk.Label(self, text="Select Time:").pack(pady=5)
         time_options = []
         for hour in range(8, 21):
@@ -31,10 +31,9 @@ class AddSessionWindow(tk.Toplevel):
                 time_options.append(f"{display_hour}:{minute:02d} {suffix}")
 
         self.time_entry = ttk.Combobox(self, values=time_options, width=20)
-        self.time_entry.set("2:00 PM")  # Optional default
+        self.time_entry.set("2:00 PM")
         self.time_entry.pack(pady=5)
 
-        # 💰 Session details
         tk.Label(self, text="Fee Charged ($):").pack(pady=5)
         self.fee_entry = tk.Entry(self)
         self.fee_entry.pack(pady=5)
@@ -47,10 +46,8 @@ class AddSessionWindow(tk.Toplevel):
         self.insurance_paid_entry = tk.Entry(self)
         self.insurance_paid_entry.pack(pady=5)
 
-        # 💾 Save button
         tk.Button(self, text="Save Session", command=self.save_session).pack(pady=10)
 
-        # 🔄 Resize based on content
         self.update_idletasks()
         self.geometry("")
 
@@ -69,12 +66,13 @@ class AddSessionWindow(tk.Toplevel):
             messagebox.showwarning("Missing Info", "Date and time are required.")
             return
 
+        session_id = str(uuid.uuid4())
+
         session = {
+            "session_id": session_id,
             "date": date,
             "time": time,
-            "fee": fee,
-            "client_paid": client_paid,
-            "insurance_paid": insurance_paid
+            "fee": fee
         }
 
         if os.path.exists(DATA_FILE):
@@ -95,5 +93,7 @@ class AddSessionWindow(tk.Toplevel):
         with open(DATA_FILE, "w") as f:
             json.dump(data, f, indent=4)
 
-        messagebox.showinfo("Saved", "Session added successfully.")
+        create_payment(self.client_id, session_id, client_paid, insurance_paid)
+
+        messagebox.showinfo("Saved", "Session and payment added successfully.")
         self.destroy()

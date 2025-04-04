@@ -25,11 +25,16 @@ class AddSessionClientPicker(tk.Toplevel):
     def create_widgets(self):
         tk.Label(self, text="Choose a Client:").pack(pady=5)
 
-        self.client_listbox = tk.Listbox(self, width=35)
+        height = min(len(self.clients), 10) or 5
+        self.client_listbox = tk.Listbox(self, width=35, height=height)
         self.client_listbox.pack(pady=5)
 
         for client in self.clients:
-            self.client_listbox.insert(tk.END, client["name"])
+            name = client["name"].strip()
+            email = client.get("email", "No email").strip()
+            display_text = f"{name} ({email})"
+
+            self.client_listbox.insert(tk.END, display_text)
 
         tk.Button(self, text="Select", command=self.select_client).pack(pady=10)
 

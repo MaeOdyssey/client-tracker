@@ -1,0 +1,30 @@
+[
+    {
+        "payment_id": "4e6c27a0-71b4-4bb9-bc13-b0caf34a3dad",
+        "client_id": "32e58d62-518f-433c-bec8-891a568a9ee8",
+        "session_id": "067ea9e3-c937-4b7d-acb9-65a4c847b833",
+        "client_paid": 44.0,
+        "insurance_paid": 400.0
+    },
+    {
+        "payment_id": "29c2afa2-46f1-4c90-98da-a5b8fc2db7d0",
+        "client_id": "61cd73a2-96d9-4ebd-a96c-55962d0d8f2e",
+        "session_id": "9c51ee09-c0a7-465d-99de-0d2eba2d1d48",
+        "client_paid": 30.0,
+        "insurance_paid": 20.0
+    },
+    {
+        "payment_id": "39d0080d-cca9-4a0c-ba02-1e5b7459d820",
+        "client_id": "d8af2799-5a28-4015-a540-80230de86897",
+        "session_id": "478d125f-1dd5-4826-a028-1eff81ff1b32",
+        "client_paid": 200.0,
+        "insurance_paid": 0.0
+    },
+    {
+        "payment_id": "89a91603-8887-4c68-8ec1-6b76f9d83151",
+        "client_id": "e531e600-6935-48ed-869e-9ea06e296c40",
+        "session_id": "e08a603c-2bf7-469a-8e36-5ca93ef032d9",
+        "client_paid": 100.0,
+        "insurance_paid": 20.0
+    }
+]

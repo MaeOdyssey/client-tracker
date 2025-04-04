@@ -1,47 +1,43 @@
 [
     {
-        "name": "Kimba",
-        "client_id": "restored-0",
+        "client_id": "61cd73a2-96d9-4ebd-a96c-55962d0d8f2e",
+        "name": "Test1 McTestface",
+        "email": "tmctestface@gmail.com",
+        "phone": "8675309",
         "sessions": [
             {
+                "session_id": "9c51ee09-c0a7-465d-99de-0d2eba2d1d48",
                 "date": "2025-04-03",
-                "time": "1",
-                "fee": 500.0,
-                "client_paid": 200.0,
-                "insurance_paid": 300.0
-            },
-            {
-                "date": "2025-04-02",
-                "time": "12",
-                "fee": 5000.0,
-                "client_paid": 3000.0,
-                "insurance_paid": 1000.0
+                "time": "2:00 PM",
+                "fee": 300.0
             }
         ]
     },
     {
-        "name": "John Doe",
-        "client_id": "restored-1",
+        "client_id": "d8af2799-5a28-4015-a540-80230de86897",
+        "name": "Banana Boat",
+        "email": "bboat@gmail.com",
+        "phone": "88845634",
         "sessions": [
             {
-                "date": "2025/04/03",
-                "time": "12",
-                "fee": 4000.0,
-                "client_paid": 2000.0,
-                "insurance_paid": 1000.0
+                "session_id": "478d125f-1dd5-4826-a028-1eff81ff1b32",
+                "date": "2025-04-01",
+                "time": "2:00 PM",
+                "fee": 300.0
             }
         ]
     },
     {
-        "name": "Brini",
-        "client_id": "restored-2",
+        "client_id": "e531e600-6935-48ed-869e-9ea06e296c40",
+        "name": "free.99",
+        "email": "free99@gmail.com",
+        "phone": "234989890",
         "sessions": [
             {
-                "date": "1991-12-30",
-                "time": "10:40",
-                "fee": 4000.0,
-                "client_paid": 2000.0,
-                "insurance_paid": 1000.0
+                "session_id": "e08a603c-2bf7-469a-8e36-5ca93ef032d9",
+                "date": "2025-04-01",
+                "time": "2:45 PM",
+                "fee": 300.0
             }
         ]
     }
